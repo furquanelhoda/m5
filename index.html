@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فرقان الهدى : 5</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+            text-align: right;
+        }
+     
+        #inputText {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 10px;
+            padding: 5px;
+        }
+        #output {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-top: 10px;
+            background-color: white;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+        .input-line, .output-line, .counters {
+            margin-bottom: 5px;
+            padding: 5px;
+        }
+        .input-line {
+            background-color: #e6f7ff;
+        }
+        .output-line {
+            background-color: #f0fff0;
+        }
+        .counters {
+            background-color: #fff0e6;
+            font-weight: bold;
+        }
+        .highlight {
+            position: relative;
+            color: red;
+            font-weight: bold;
+        }
+        .number {
+            position: absolute;
+            top: -0.7em;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.5em;
+            font-weight: normal;
+            color: blue;
+        }
+        .large-number {
+            font-size: 0.35em;
+            color: violet;
+        }
+        .comma {
+            color: gold;
+            font-weight: bold;
+        }
+        button {
+            padding: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 1px solid bisque;
+        }
+        button:hover {
+            background-color: #e6f0e7;
+            color: #4CAF50;
+            border: 1px solid rgb(17, 10, 1);
+
+        }
+        /* table CSS */
+table{
+    width: 100%;
+    direction: rtl;
+    text-align: center;
+    font-weight: bold;
+}
+
+.pl{
+    background: #eb0e0e;
+    color: black;
+}
+thead{
+    background: black;
+    color: aliceblue;
+}
+tbody{
+    background: rgb(3, 197, 13);
+    color: rgb(7, 9, 10);
+}
+    </style>
+</head>
+<body>
+    <p style="text-align:center">
+        <span style="color:#9b59b6; font-size:22px; background-color:#f1c40f">&nbsp;</span>
+        <span style="color:#2c3e50; font-size:22px; background-color:#f1c40f">عروج فكري روحي</span>
+        <span style="color:#9b59b6; font-size:22px; background-color:#f1c40f">&nbsp;</span>
+    </p>
+    <textarea id="inputText" placeholder="أدخل النص القرآني هنا" oninput="analyzeText()"></textarea>
+    <button onclick="printResult()">طباعة النتائج</button>
+    <div id="output"></div>
+<div>
+    
+    <table dir="rtl">
+        <thead>
+            <tr>
+                <th colspan="4">المجموعة الخامسة ( 5 )</th>
+             
+            </tr>
+        </thead>
+        <caption>
+            <tr>
+                <th colspan="4" class="pl">المفتاح  :  ألر حم كهيعص ق حم      </th>
+
+             
+            </tr>
+        </caption>
+      
+        <tbody>
+            <tr>
+                <th>الحجر</th>
+                <th>الكوثر</th>
+                <th>التغابن</th>
+                <th>الدخان</th>
+            </tr>
+            <tr>
+                <th>مريم</th>
+                <th>الفيل</th>
+                <th>المجادلة</th>
+                <th>سبأ</th>
+            </tr>
+            <tr>
+                <th>ق</th>
+                <th>الإسراء</th>
+                <th>الماعون</th>
+                <th>التحريم</th>
+            </tr>
+            <tr>
+                <th>الأحقاف</th>
+                <th>الواقعة</th>
+                <th>الصافات</th>
+                <th>القمر</th>
+            </tr>
+
+        </tbody>
+       </table>
+</div>
+    <script>
+        const highlightChars = {
+            'ا': '1', 'أ': '1', 'إ': '1', 'ئ': '1', 'ؤ': '1', 'ء': '1', 'ى': '1', 'آ': '1',
+            'ل': '1',
+            'م': '2',
+            'ر': '1',
+            'ح': '2',
+            'ك': '1',
+            'ه': '1', 
+            'ي': '1',
+            'ع': '1',
+            'ص': '1',
+            'ق': '1'
+        };
+
+        function highlightText(text) {
+            return text.split('').map(char => {
+                if (char in highlightChars) {
+                    const number = highlightChars[char];
+                    const numberClass = parseInt(number) > 9 ? 'number large-number' : 'number';
+                    return `<span class="highlight">${char}<span class="${numberClass}">${number}</span></span>`;
+                }
+                return char;
+            }).join('');
+        }
+
+        function analyzeText() {
+            const inputText = document.getElementById('inputText').value;
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = `<p dir="rtl"><span style="color:#ff0099"><span style="font-size:22px"><span style="background-color:#000000">&nbsp; ألر حم كهيعص ق حم&nbsp; &nbsp;</span></span></span></p>`;
+
+            const lines = inputText.split('\n');
+            let totalAnalysis = '';
+            
+            lines.forEach((line, index) => {
+                if (line.trim() !== '') {
+                    outputDiv.innerHTML += `<div class="input-line">القرآن: ${highlightText(line)}</div>`;
+                    const lineAnalysis = analyzeLine(line);
+                    outputDiv.innerHTML += `<div class="output-line">فرقان: ${lineAnalysis}</div>`;
+                    totalAnalysis += lineAnalysis + ' ';
+                }
+            });
+
+            const wordCount = countWords(inputText);
+            const allCharCount = countAllChars(inputText);
+            const specificCharCounts = countSpecificChars(inputText);
+
+            outputDiv.innerHTML += `<div class="counters">
+                إحصائيات النص الكامل:<br>
+                عدد الكلمات: ${wordCount}<br>
+                عدد جميع الحروف: ${allCharCount}<br>
+                عدد الحروف (أ، ل، م، ر، ح، ك، ه، ي، ع، ص، ق): ${specificCharCounts.total}<br>
+                عدد حرف (أ): ${specificCharCounts.alif}<br>
+                عدد حرف (ل): ${specificCharCounts.lam}<br>
+                عدد حرف (ر): ${specificCharCounts.raa}<br>
+                عدد حرف (ح): ${specificCharCounts.hhae}<br>
+                عدد حرف (م): ${specificCharCounts.meem}<br>
+                عدد حرف (ك): ${specificCharCounts.kaf}<br>
+                عدد حرف (ه): ${specificCharCounts.hae}<br>
+                عدد حرف (ي): ${specificCharCounts.yaa}<br>
+                عدد حرف (ع): ${specificCharCounts.ine}<br>
+                عدد حرف (ص): ${specificCharCounts.sad}<br>
+                عدد حرف (ق): ${specificCharCounts.paf}
+            </div>`;
+        }
+
+        function analyzeLine(line) {
+            const words = line.split(' ');
+            return words.map(analyzeWord).join('<span class="comma"> ، </span>');
+        }
+
+        function analyzeWord(word) {
+            let result = '';
+            for (let char of word) {
+                if (['ا', 'أ', 'ئ', 'ى', 'ء', 'ؤ', 'إ', 'آ'].includes(char)) {
+                    result += 'ألف ';
+                } else if (char === 'ل') {
+                    result += 'لام ';
+                } else if (char === 'م') {
+                    result += 'ميم ميم ';
+                } else if (char === 'ر') {
+                    result += 'راء ';
+                } else if (char === 'ح') {
+                    result += 'حاء حاء ';
+                } else if (char === 'ك') {
+                    result += 'كاف ';
+                } else if (char === 'ه')  {
+                    result += 'هاء ';
+                } else if (char === 'ي') {
+                    result += 'ياء ';
+                } else if (char === 'ع') {
+                    result += 'عين ';
+                } else if (char === 'ص') {
+                    result += 'صاد ';
+                } else if (char === 'ق') {
+                    result += 'قاف ';
+                }
+            }
+            return result.trim();
+        }
+
+        function countWords(text) {
+            return text.trim().split(/\s+/).length;
+        }
+
+        function countAllChars(text) {
+            return text.replace(/\s/g, '').length;
+        }
+
+        function countSpecificChars(text) {
+            const counts = {
+                alif: 0, lam: 0, meem: 0, raa: 0, hhae: 0,
+                kaf: 0, hae: 0, yaa: 0, ine: 0, sad: 0, paf: 0,
+                total: 0
+            };
+
+            for (let char of text) {
+                if (['ا', 'أ', 'ئ', 'ى', 'ء', 'ؤ', 'إ', 'آ'].includes(char)) {
+                    counts.alif++;
+                    counts.total++;
+                } else if (char === 'ل') {
+                    counts.lam++;
+                    counts.total++;
+                } else if (char === 'م') {
+                    counts.meem++;
+                    counts.total++;
+                } else if (char === 'ر') {
+                    counts.raa++;
+                    counts.total++;
+                } else if (char === 'ح') {
+                    counts.hhae++;
+                    counts.total++;
+                } else if (char === 'ك') {
+                    counts.kaf++;
+                    counts.total++;
+                } else if (char === 'ه') {
+                    counts.hae++;
+                    counts.total++;
+                } else if (char === 'ي') {
+                    counts.yaa++;
+                    counts.total++;
+                } else if (char === 'ع') {
+                    counts.ine++;
+                    counts.total++;
+                } else if (char === 'ص') {
+                    counts.sad++;
+                    counts.total++;
+                } else if (char === 'ق') {
+                    counts.paf++;
+                    counts.total++;
+                }
+            }
+
+            return counts;
+        }
+
+        function printResult() {
+            const printContents = document.getElementById('output').innerHTML;
+            const originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+    </script>
+</body>
+</html>
