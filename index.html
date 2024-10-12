@@ -97,6 +97,30 @@ tbody{
     background: rgb(3, 197, 13);
     color: rgb(7, 9, 10);
 }
+/* css table1 */
+
+#table1{
+        width: 40%;
+        font-weight: bold;
+       direction: ltr;
+     
+    
+    }
+
+    .fred{
+        background-color: aqua;
+        color: black;
+    }
+    .one{
+        background: black;
+        color: aliceblue;
+        margin: 2px;
+
+    }
+    .two{
+        background: rgb(9, 250, 102);
+        color: rgb(2, 7, 10);
+    }
     </style>
 </head>
 <body>
@@ -105,7 +129,45 @@ tbody{
         <span style="color:#2c3e50; font-size:22px; background-color:#f1c40f">عروج فكري روحي</span>
         <span style="color:#9b59b6; font-size:22px; background-color:#f1c40f">&nbsp;</span>
     </p>
-    <textarea id="inputText" placeholder="أدخل النص القرآني هنا" oninput="analyzeText()"></textarea>
+    
+    <table id="table1">
+        <thead>
+            <tr>
+               
+                <th class="one">1 </th>
+                <th class="two">1 </th>
+                <th class="one">1 </th>
+                <th class="two">1 </th>
+                <th class="one">1 </th>
+                <th class="two">1 </th>
+                <th class="one">2 </th>
+                <th class="two">2 </th>
+                <th class="one">1 </th>
+                <th class="two">1 </th>
+                <th class="one">1 </th>
+                <th class="fred">عدد تكرارها</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+               
+                <th class="one">ق</th>
+                <th class="two">ص</th>
+                <th class="one">ع</th>
+                <th class="two">ي</th>
+                <th class="one">ه</th>
+                <th class="two">ك</th>
+                <th class="one">م</th>
+                <th class="two">ح</th>
+                <th class="one">ر</th>
+                <th class="two">ل</th>
+                <th class="one">أ</th>
+                <th class="fred">حروف الفرقان</th>
+            </tr>
+           
+        </tbody>
+    </table>
+    <textarea name="text" id="inputText"  oninput="analyzeText()" required></textarea>
     <button onclick="printResult()">طباعة النتائج</button>
     <div id="output"></div>
 <div>
@@ -127,25 +189,25 @@ tbody{
       
         <tbody>
             <tr>
-                <th>الحجر</th>
+                <th>الحجر&nbsp;<span style="color: #eb0e0e;">( ألر )</span>&nbsp;</th>
                 <th>الكوثر</th>
                 <th>التغابن</th>
-                <th>الدخان</th>
+                <th>الدخان&nbsp;<span style="color: #eb0e0e;">( حم )</span>&nbsp;</th>
             </tr>
             <tr>
-                <th>مريم</th>
+                <th>مريم&nbsp;<span style="color: #eb0e0e;">( كهيعص )</span>&nbsp;</th>
                 <th>الفيل</th>
                 <th>المجادلة</th>
                 <th>سبأ</th>
             </tr>
             <tr>
-                <th>ق</th>
+                <th>ق&nbsp;<span style="color: #eb0e0e;">( ق )</span>&nbsp;</th>
                 <th>الإسراء</th>
                 <th>الماعون</th>
                 <th>التحريم</th>
             </tr>
             <tr>
-                <th>الأحقاف</th>
+                <th>الأحقاف&nbsp;<span style="color: #eb0e0e;">( حم )</span>&nbsp;</th>
                 <th>الواقعة</th>
                 <th>الصافات</th>
                 <th>القمر</th>
@@ -168,7 +230,7 @@ tbody{
             'ص': '1',
             'ق': '1'
         };
-
+        const highlightChars1 = ['ا', 'أ', 'إ', 'ئ','ؤ', 'ء', 'ى', 'آ', 'ل', 'م', 'ر', 'ح', 'ك', 'ه', 'ي', 'ع', 'ص', 'ق'];
         function highlightText(text) {
             return text.split('').map(char => {
                 if (char in highlightChars) {
@@ -178,6 +240,47 @@ tbody{
                 }
                 return char;
             }).join('');
+        }
+
+        // script placeholder
+        
+        const runInput = document.querySelector('#inputText');
+        const line = '   أدخل النص القرآني هنا ......';
+        const speed = 100;
+        let i = 0;
+        let done;
+
+        function run_line() {
+            if (i++ < line.length) {
+                runInput.value = line.substring(0, i);
+            } else {
+                runInput.value = " ";
+                i = 0;
+            }
+            done = setTimeout(run_line, speed);
+        }
+        run_line();
+
+        const inputText = document.getElementById('inputText');
+        const customAttr = inputText.getAttribute('placeholder');
+
+        inputText.addEventListener('focus', function () {
+            clearTimeout(done);
+            this.value = '';
+            if (this.hasAttribute('placeholder')) {
+                this.removeAttribute('placeholder');
+            }
+        });
+
+        inputText.addEventListener('blur', function () {
+            this.setAttribute('placeholder', customAttr);
+        });
+
+        //end script place holder
+        function highlightText1(text) {
+            return text.split('').map(char => 
+                highlightChars1.includes(char) ? `<span class="highlight">${char}</span>` : char
+            ).join('');
         }
 
         function analyzeText() {
@@ -190,6 +293,7 @@ tbody{
             
             lines.forEach((line, index) => {
                 if (line.trim() !== '') {
+                    outputDiv.innerHTML += `<div class="input-line">القرآن: ${highlightText1(line)}</div>`;
                     outputDiv.innerHTML += `<div class="input-line">القرآن: ${highlightText(line)}</div>`;
                     const lineAnalysis = analyzeLine(line);
                     outputDiv.innerHTML += `<div class="output-line">فرقان: ${lineAnalysis}</div>`;
